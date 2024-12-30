@@ -1,0 +1,329 @@
+*{
+    margin :0;
+    padding:0;
+    font-family:'Poppins',sans-serif;
+    box-sizing: border-box;
+}
+.container{
+    width: 100%;
+    min-height: 100vh;
+    background-image: linear-gradient(rgba(9,0,77,0.65),rgba(9,0,77,0.65)),url(image/dental_home.jpg);
+    background-size: cover;
+    background-position: center;
+    padding: 10px 8%;
+}
+.content {
+    text-align: right; /* Align text to the right */
+    margin: 20px;
+    color: #fff;
+    margin-left: auto; /* Push the content all the way to the right */
+    margin-right: 20px; /* Add some space from the right edge */
+    width: 50%; /* Optional: Control the width of the content */
+    margin-top: 50px; /* Adjust this value to control how far down it moves */
+}
+
+
+/* Add styles for the section class */
+section {
+    padding: 50px 0; /* Add vertical padding */
+    background-color: #fff /* Light background color for contrast */
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333; /* Dark text for visibility */
+}
+
+nav{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:10px 0;
+}
+.logo {
+    font-size: 2rem; /* Adjust size of the logo text */
+    font-weight: bold; /* Make the text bold */
+    color: #fff; /* Text color white */
+    letter-spacing: 2px; /* Optional: Add some space between letters */
+    cursor: pointer; /* Add pointer cursor on hover */
+    text-transform: uppercase; /* Optional: Capitalize the text */
+    white-space: nowrap; /* Prevent text from wrapping to a new line */
+    display: inline-block; /* Make it behave like an inline element but still block-level for width */
+}
+nav ul{
+    list-style:none;
+    width :100%;
+    text-align: right;
+    padding-right:60px ;
+}
+nav ul li{
+    display:inline-block;
+    margin: 10px 20px;
+}
+nav ul li a{
+    color:#fff;
+    text-decoration:none;
+}
+.btn{
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border: 0;
+    outline: 0;
+    border-radius: 5px;
+    background: #f5168d;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+}
+.btn img{
+    width: 20px;
+    margin-right: 10px;
+}
+html {
+    scroll-behavior: smooth; /* Enables smooth scrolling */
+}
+/*===== About Section =====*/
+.about {
+    padding: 60px 0;
+    background-color: #fff;
+}
+
+/* Style for About Section content cards */
+.about__content {
+    width: 48%; /* Ensure the cards are side by side */
+    padding: 20px; /* Padding inside the cards */
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: auto; /* Adjust height automatically based on the content */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.about__content:hover {
+    transform: translateY(-10px); /* Lift the card on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+}
+.about__content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+.about__title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.about__description {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-top: 10px;
+}
+
+/* About section container adjustments */
+.about__container {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin: 0 auto;
+    width: 80%;
+    flex-wrap: wrap; /* Make sure content wraps on smaller screens */
+}
+
+
+.services__container {
+    display: flex;
+    justify-content: space-around; /* Distribute items evenly with space between */
+    align-items: center; /* Align items vertically in the center */
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    gap: 20px; /* Add some space between items */
+    background-color :#fff;
+}
+
+/* Services Content Hover Effect */
+.services__content {
+    flex: 1 1 30%; /* Make items flexible and responsive */
+    text-align: center; /* Center-align the content */
+    background-color: #fff; /* White background for cards */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+/* Hover Effect for Services Section */
+.services__content:hover {
+    transform: translateY(-10px); /* Lift the card on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+}
+
+/* Contact Section */
+.contact {
+    padding: 50px 0; /* Add vertical spacing */
+    background-color: #fff; /* White background */
+    text-align: center; /* Center align the content */
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333; /* Dark color for visibility */
+}
+/* Notes Section */
+.notes {
+    padding: 50px 0;
+    background-color: #fff; /* Light background for contrast */
+    text-align: center;
+}
+
+.notes__container {
+    display: flex;
+    justify-content: space-around; /* Distribute items evenly */
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    gap: 20px; /* Space between items */
+}
+
+.notes__content {
+    flex: 1 1 30%; /* Responsive flex items */
+    text-align: center;
+    background-color: #f9f9f9; /* White background for card effect */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    max-width: 300px; /* Optional: Limit the card width */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+.notes__content:hover {
+    transform: translateY(-10px); /* Lift the card on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+}
+
+.notes__img {
+    width: 60px; /* Adjust icon size */
+    margin-bottom: 15px; /* Space below the image */
+}
+
+.notes__title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.notes__description {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: #555; /* Subtle text color */
+}
+
+.notes__button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff; /* Blue button */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.notes__button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Contact Container */
+.contact__container {
+    display: flex;
+    justify-content: center; /* Center the form horizontally */
+    align-items: center; /* Center the form vertically */
+}
+
+/* Contact Form */
+.contact__form {
+    background: #fff; /* White background for form */
+    padding: 30px 20px; /* Add padding inside the form */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    max-width: 500px; /* Set a maximum width */
+    width: 100%; /* Full width within container */
+}
+
+/* Contact Input Fields */
+.contact__input {
+    width: 100%; /* Full width */
+    padding: 15px; /* Add padding inside the input */
+    margin-bottom: 15px; /* Spacing between inputs */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 1rem; /* Standard font size */
+}
+
+/* Contact Button */
+.contact__button {
+    width: 100%; /* Full width */
+    padding: 15px; /* Add padding inside the button */
+    background-color: #007bff; /* Blue background */
+    color: #fff; /* White text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 1rem; /* Standard font size */
+    font-weight: bold; /* Bold text */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+.contact__button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+/* Footer Section */
+.footer {
+    background-color: #09004d; /* Dark blue background */
+    color: #fff; /* White text color */
+    text-align: center; /* Center align all content */
+    padding: 20px 10px; /* Add spacing inside the footer */
+    margin-top: 50px; /* Add spacing above the footer */
+}
+
+.footer__title {
+    font-size: 1.5rem; /* Slightly larger text for the title */
+    font-weight: bold; /* Bold font */
+    margin-bottom: 10px; /* Space below the title */
+}
+
+.footer__social {
+    display: flex;
+    justify-content: center; /* Center the social icons */
+    gap: 20px; /* Add space between icons */
+    margin: 15px 0; /* Add space around the social icons */
+}
+
+.footer__icon {
+    color: #fff; /* White color for icons */
+    font-size: 1.5rem; /* Icon size */
+    text-decoration: none; /* Remove underline */
+    transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.footer__icon:hover {
+    color: #f5168d; /* Pink color on hover */
+}
+
+.footer__copy {
+    font-size: 0.9rem; /* Smaller font for the copyright */
+    margin-top: 15px; /* Space above the copyright text */
+    opacity: 0.8; /* Slightly dim the text */
+}
+

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration - Dental Notes</title>
+    <link rel="stylesheet" href="register.css">
+    <script>
+        function handleRegistration(event) {
+            event.preventDefault(); // Prevent form submission to the server
+            alert('Registration successful!'); // Display a success message
+            window.location.href = 'index.html'; // Redirect to index.html
+        }
+    </script>
+</head>
+<body>
+    <div class="registration-container">
+        <h1>New Registration</h1>
+        <div class="form-container">
+            <form onsubmit="handleRegistration(event)" class="register-form">
+                <input type="text" id="name" placeholder="Full Name" class="register-input" required>
+                <input type="email" id="email" placeholder="Email Address" class="register-input" required>
+                <input type="password" id="password" placeholder="Password" class="register-input" required>
+                <button type="submit" class="submit-button">Register</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

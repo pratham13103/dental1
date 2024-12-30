@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+    <script>
+        async function handleLogin(event) {
+            event.preventDefault(); // Prevent form submission for AJAX
+            
+            const name = document.getElementById('name').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                // Send POST request to backend
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name, password }),
+                });
+
+                const data = await response.text();  // Get the response message
+
+                // Check if login is successful (HTTP status 200) or error
+                if (response.ok) {
+                    window.location.href = 'index.html';  // Redirect to index if login is successful
+                } else {
+                    alert(data);  // Show the error message (user not found or incorrect password)
+                }
+            } catch (error) {
+                alert("An error occurred while processing the login request.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <form method="post" onsubmit="handleLogin(event)">
+        <h1>Login Form</h1>
+        <label for="name">Name</label>
+        <br>
+        <input id="name" placeholder="Name" name="name" type="text" required>
+        <br>
+        <label for="password">Password</label>
+        <br>
+        <input id="password" placeholder="Password" name="password" type="password" required>
+        <br>
+        <input class="submit-button" type="submit" value="Login">
+        <h3>Don’t have an account?</h3>
+        <a href="/register">Create a new account</a>
+    </form>
+</body>
+</html>
