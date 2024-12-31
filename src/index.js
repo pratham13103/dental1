@@ -1,92 +1,139 @@
-const express = require("express")
-const path = require("path")
-const app = express()
-// const ejs = require("ejs")
-const LogInCollection = require("./mongo")
-const port = process.env.PORT || 3000
-app.use(express.json())
+const express = require("express");
+const path = require("path");
+const cors = require("cors"); // Import cors
+const nodemailer = require("nodemailer");
+const LogInCollection = require("./mongo"); // Assumes `mongo.js` is correctly set up
+const http = require("http");
 
-app.use(express.urlencoded({ extended: false }))
+const app = express();
+const port = process.env.PORT || 8080;
 
-const publicPath = path.join(__dirname)
-console.log(publicPath);
+// Enable CORS for Live Server
+app.use(cors({
+    origin: "http://127.0.0.1:5500", // Allow requests from Live Server
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+}));
 
-app.set('view engine', 'ejs')
-app.set('views', publicPath);
-app.use(express.static(publicPath))
+// Middleware for parsing JSON and URL-encoded data
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
+// Set up static file serving and view engine
+const publicPath = path.join(__dirname);
+console.log("Serving static files from:", publicPath);
 
-// ejs.registerPartials(partialPath)
+app.set("view engine", "ejs");
+app.set("views", publicPath);
+app.use(express.static(publicPath));
 
+// Routes for Register and Login Pages
+app.get("/", (req, res) => {
+    res.render("login");
+});
 
-app.get('/register', (req, res) => {
-    res.render('register')
-})
-app.get('/', (req, res) => {
-    res.render('login')
-})
-
-
-
-// app.get('/index', (req, res) => {
-//     res.render('index')
-// })
-
-app.post('/register', async (req, res) => {
-    
-    // const data = new LogInCollection({
-    //     name: req.body.name,
-    //     password: req.body.password
-    // })
-    // await data.save()
-
-    const data = {
-        name: req.body.name,
-        password: req.body.password
-    }
-
-    const checking = await LogInCollection.findOne({ name: req.body.name })
-
-   try{
-    if (checking.name === req.body.name && checking.password===req.body.password) {
-        res.send("user details already exists")
-    }
-    else{
-        await LogInCollection.insertMany([data])
-    }
-   }
-   catch{
-    res.send("wrong inputs")
-   }
-
-    res.status(201).render("index", {
-        naming: req.body.name
-    })
-})
-
-
-app.post('/login', async (req, res) => {
-    try {
-        const check = await LogInCollection.findOne({ name: req.body.name });
-
-        if (!check) {
-            return res.send("User not found");  // User does not exist
-        }
-
-        if (check.password === req.body.password) {
-            // Password matches, proceed with login
-            res.status(201).sendFile(path.join(publicPath, 'index.html'));
-        } else {
-            res.send("Incorrect password");  // Incorrect password
-        }
-    } catch (e) {
-        res.send("Error occurred while processing the login");
-    }
+app.get("/register", (req, res) => {
+    res.render("register");
 });
 
 
+app.get('/get-pdfs', async (req, res) => {
+    try {
+        const pdfs = await Pdf.find();
+        res.json(pdfs);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching PDFs', error });
+    }
+});
 
+// Register route to create new user
+app.post("/register", async (req, res) => {
+    const { name, email, password } = req.body;
 
-app.listen(port, () => {
-    console.log('port connected');
-})
+    if (!name || !email || !password) {
+        return res.status(400).send('All fields are required');
+    }
+
+    try {
+        // Check if the user already exists
+        const existingUser = await LogInCollection.findOne({ email });
+        if (existingUser) {
+            return res.status(400).send('User already exists');
+        }
+
+        // Create a new user
+        const newUser = new LogInCollection({
+            name,
+            email, // Ensure this is included
+            password
+        });
+
+        // Save the new user to the database
+        await newUser.save();
+        res.status(201).send('Registration successful');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error occurred during registration');
+    }
+});
+
+// Login route for existing users
+app.post("/login", async (req, res) => {
+    const { name, password } = req.body;
+
+    try {
+        // Check if user exists
+        const user = await LogInCollection.findOne({ name });
+        if (!user) {
+            return res.status(404).send("User not found");
+        }
+
+        // Validate password
+        if (user.password !== password) {
+            return res.status(400).send("Incorrect password");
+        }
+
+        // Login successful
+        res.status(200).send("Login successful!");
+    } catch (error) {
+        console.error("Error during login:", error);
+        res.status(500).send("An error occurred during login");
+    }
+});
+
+// Contact form route for email sending
+app.post("/", (req, res) => {
+    const { name, email, message } = req.body;
+
+    const auth = nodemailer.createTransport({
+        service: "gmail",
+        secure: true,
+        port: 465,
+        auth: {
+            user: "pratham.13jaiswal@gmail.com",
+            pass: "xaeimzpqxjptgmta", // Please avoid hardcoding sensitive information like this
+        },
+    });
+
+    const receiver = {
+        from: "pratham.13jaiswal@gmail.com",
+        to: "prathamesh.r.jaiswal@gmail.com",
+        subject: "Node Js Mail Testing!",
+        text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+    };
+
+    auth.sendMail(receiver, (error, emailResponse) => {
+        if (error) {
+            console.error(error);
+            return res.status(500).json({ success: false, message: "Failed to send email" });
+        }
+        console.log("Email sent successfully!");
+        res.status(200).json({ success: true, message: "Email sent successfully" });
+    });
+});
+
+// Start the server
+const server = http.createServer(app);
+server.listen(port, () => {
+    console.log("Server is running on http://localhost:" + port);
+});

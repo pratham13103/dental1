@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload PDF</title>
+</head>
+<body>
+    <h2>Upload PDF</h2>
+    <form id="uploadForm">
+        <input type="file" id="pdfFile" accept=".pdf" required><br>
+        <input type="text" id="description" placeholder="Enter description" required><br>
+        <button type="submit">Upload PDF</button>
+    </form>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const pdfFile = document.getElementById('pdfFile').files[0];
+            const description = document.getElementById('description').value;
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                alert('You need to log in first');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('pdf', pdfFile);
+            formData.append('description', description); // Add description
+
+            try {
+                const response = await fetch('http://localhost:8080/upload-pdf', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    body: formData,
+                });
+
+                if (!response.ok) throw new Error('Upload failed');
+
+                const data = await response.json();
+                alert('PDF uploaded successfully');
+                // Optionally, show the uploaded file URL or reload the page
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+    </script>
+</body>
+</html>

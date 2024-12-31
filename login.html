@@ -13,9 +13,16 @@
             const name = document.getElementById('name').value;
             const password = document.getElementById('password').value;
 
+            // Check if the entered credentials are for the admin
+            if (name === 'admin' && password === '1234') {
+                alert("Admin login successful");
+                window.location.href = 'index.html';  // Redirect to admin dashboard
+                return;
+            }
+
             try {
-                // Send POST request to backend
-                const response = await fetch('/login', {
+                // Send POST request to backend for other users
+                const response = await fetch('http://localhost:8080/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -26,10 +33,13 @@
                 const data = await response.text();  // Get the response message
 
                 // Check if login is successful (HTTP status 200) or error
-                if (response.ok) {
-                    window.location.href = 'index.html';  // Redirect to index if login is successful
+                if (response.status === 200) {
+                    // Login successful
+                    alert('Login successful!');
+                    window.location.href = 'index.html';  // Redirect to user dashboard
                 } else {
-                    alert(data);  // Show the error message (user not found or incorrect password)
+                    // Show the error message (user not found or incorrect password)
+                    alert(data);
                 }
             } catch (error) {
                 alert("An error occurred while processing the login request.");
@@ -38,19 +48,19 @@
     </script>
 </head>
 <body>
-    <form method="post" onsubmit="handleLogin(event)">
+    <form method="post" onsubmit="handleLogin(event)" autocomplete="off">
         <h1>Login Form</h1>
         <label for="name">Name</label>
         <br>
-        <input id="name" placeholder="Name" name="name" type="text" required>
+        <input id="name" placeholder="Name" name="name" type="text" required autocomplete="off">
         <br>
         <label for="password">Password</label>
         <br>
-        <input id="password" placeholder="Password" name="password" type="password" required>
+        <input id="password" placeholder="Password" name="password" type="password" required autocomplete="off">
         <br>
         <input class="submit-button" type="submit" value="Login">
         <h3>Don’t have an account?</h3>
-        <a href="/register">Create a new account</a>
+        <a href="register.html">Create a new account</a>
     </form>
 </body>
 </html>
