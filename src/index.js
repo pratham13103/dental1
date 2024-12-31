@@ -10,7 +10,10 @@ const port = process.env.PORT || 8080;
 
 // Enable CORS for Live Server
 app.use(cors({
-    origin: [ "http://127.0.0.1:5500" , "https://pratham13103.github.io" , "https://dental1-three.vercel.app"], // Allow requests from Live Server
+    origin: [ "http://127.0.0.1:5500" ,
+              "https://pratham13103.github.io" , 
+              "https://dental1-three.vercel.app",
+              "http://192.168.1.5:5500"], // Allow requests from Live Server
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
 }));
